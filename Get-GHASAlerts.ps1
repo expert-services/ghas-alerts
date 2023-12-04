@@ -283,5 +283,6 @@ foreach ($org in $Orgs) {
         Get-GitHubOrganizationGHASAlerts @splat
     }
     $splat.Remove('AlertType')
+    $splat.Remove('OutputDirectory')
 }
  

@@ -63,7 +63,7 @@ name: ghas-alert-data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 5,6 * * *'
+    - cron: '0 6 * * *'
 jobs:
   get-data:
     runs-on: ubuntu-latest

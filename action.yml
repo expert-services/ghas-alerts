@@ -33,19 +33,16 @@ runs:
           Orgs = $orgs
           GitHubToken = '${{ inputs.github_token }}'
         }
-
         if ('${{ inputs.proxy }}' -ne '') {$splat.Proxy = '${{ inputs.proxy }}'}
         if ('${{ inputs.proxy_credential_password }}' -ne'' -and '${{ inputs.proxy_credential.user }}' -ne '') {
           [securestring]$secStringPassword = ConvertTo-SecureString '${{ inputs.proxy_credential_password }}' -AsPlainText -Force
           [pscredential]$proxyCred = New-Object System.Management.Automation.PSCredential ('${{ inputs.proxy_credential_password }}', $secStringPassword)
           $splat.ProxyCredential = $proxyCred
         }
-        
         ./scripts/Get-GHASAlerts/Get-GHASAlerts.ps1 @splat
       shell: pwsh
-      
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ghas-alert-data
         path: ghas_alerts/

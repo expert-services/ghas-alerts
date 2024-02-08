@@ -22,6 +22,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Checkout private tools
+      run: git clone --branch main https://github.com/expert-services/ghas-alerts.git
+      shell: pwsh
     - name: Get GHAS Alerts
       run: |
         [array]$orgs = '${{ inputs.github_orgs }}' -split ','

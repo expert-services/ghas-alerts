@@ -24,10 +24,10 @@ runs:
   steps:
     - name: Get GHAS Alerts
       run: |
-        [array]$orgs = ${{ inputs.github_orgs }} -split ','
+        [array]$orgs = '${{ inputs.github_orgs }}' -split ','
         $splat = @{
           Orgs = $orgs
-          GitHubToken = ${{ inputs.github_token }}
+          GitHubToken = '${{ inputs.github_token }}'
         }
 
         if ('${{ inputs.proxy }}' -ne '') {$splat.Proxy = '${{ inputs.proxy }}'}

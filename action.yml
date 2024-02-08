@@ -42,4 +42,9 @@ runs:
         
         ./scripts/Get-GHASAlerts/Get-GHASAlerts.ps1 @splat
       shell: pwsh
-    
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ghas-alert-data
+          path: ghas_alerts/

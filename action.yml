@@ -1,0 +1,45 @@
+name: 'ghas-alerts'
+description: 'This script gathers GitHub Advanced security alerts (code scanning and secret scanning), and creates JSON based output for them. Additionally, it gathers repository information to enable enriching alert data with repository properties.'
+branding:
+  icon: 'alert-circle'  
+  color: 'purple'
+inputs:
+  github_token:
+    description: 'The GitHub token to use to interact with the REST API and gather alerts with.'
+    required: true
+  github_orgs:
+    description: 'The GitHub organizations to gather alerts for.'
+    required: true
+  proxy:
+    description: 'The outbound proxy URL to leverage when interacting with the GitHub API.'
+    required: false
+  proxy_credential_password:
+    description: 'The password to use when authenticating with the outbound proxy; proxy_credential_user is also required.'
+    required: false
+  proxy_credential_user:
+    description: 'The username to use when authenticating with the outbound proxy; proxy_credential_password is also required.'
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - name: Get GHAS Alerts
+      run: |
+        [array]$orgs = ${{ inputs.github_orgs }} -split ','
+        $splat = @{
+          Orgs = $orgs
+          GitHubToken = ${{ inputs.github_token }}
+        }
+
+        if (${{ inputs.proxy }} -ne '') {
+          $splat.Proxy = ${{ inputs.proxy }}
+        }
+
+        if (${{ inputs.proxy_credential_password }} -ne '' -and ${{ inputs.proxy_credential.user }} -ne '') {
+          [securestring]$secStringPassword = ConvertTo-SecureString '${{ inputs.proxy_credential_password }}' -AsPlainText -Force
+          [pscredential]$proxyCred = New-Object System.Management.Automation.PSCredential (${{ inputs.proxy_credential_password }}, $secStringPassword)
+          $splat.ProxyCredential = $proxyCred
+        }
+        
+        ./scripts/Get-GHASAlerts/Get-GHASAlerts.ps1 @splat
+      shell: pwsh
+    

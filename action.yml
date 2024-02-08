@@ -1,5 +1,5 @@
 name: 'ghas-alerts'
-description: 'This script gathers GitHub Advanced security alerts (code scanning and secret scanning), and creates JSON based output for them. Additionally, it gathers repository information to enable enriching alert data with repository properties.'
+description: 'This script gathers GitHub Advanced security alerts (code scanning and secret scanning), and creates JSON based output for them.'
 branding:
   icon: 'alert-circle'  
   color: 'purple'

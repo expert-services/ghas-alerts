@@ -30,10 +30,10 @@ runs:
           GitHubToken = ${{ inputs.github_token }}
         }
 
-        if ('${{ inputs.proxy }}' -ne '') {$splat.Proxy = ${{ inputs.proxy }}}
+        if ('${{ inputs.proxy }}' -ne '') {$splat.Proxy = '${{ inputs.proxy }}'}
         if ('${{ inputs.proxy_credential_password }}' -ne'' -and '${{ inputs.proxy_credential.user }}' -ne '') {
           [securestring]$secStringPassword = ConvertTo-SecureString '${{ inputs.proxy_credential_password }}' -AsPlainText -Force
-          [pscredential]$proxyCred = New-Object System.Management.Automation.PSCredential (${{ inputs.proxy_credential_password }}, $secStringPassword)
+          [pscredential]$proxyCred = New-Object System.Management.Automation.PSCredential ('${{ inputs.proxy_credential_password }}', $secStringPassword)
           $splat.ProxyCredential = $proxyCred
         }
         

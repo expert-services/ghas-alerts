@@ -2,23 +2,16 @@ name: ghas-alert-data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 5,6 * * *'
+    - cron: '0 6 * * *'
 jobs:
   get-data:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - name: Execute script
-      env:
-        GITHUB_TOKEN: ${{ secrets.GHAS_ALERT_TOKEN }}
-      run: |
-        ./Get-GHASAlerts.ps1 -orgs @('OctoDemo')
-      shell: pwsh
-    - name: Upload artifact  
-      uses: actions/upload-artifact@v3
+    - name: Get GHAS Alerts
+      uses: expert-services/ghas-alerts@main
       with:
-        name: ghas-alert-data
-        path: ghas_alerts/
+        github_token: ${{ secrets.GHAS_ALERT_TOKEN }}
+        github_orgs: expert-services
+        

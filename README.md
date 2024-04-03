@@ -22,6 +22,17 @@ An Actions workflow artifact `ghas-alert-data` is produced that contains the dat
 
 ![artifacts](/images/artifacts.jpg)
 
+The directory structure that used is similar to the below, where the date directory is dynamic.
+
+```
+├───ghas_alerts
+│   └───20231117Z
+|       ├───code_scanning_alerts
+|       ├───repos
+|       ├───repos_last_commit
+|       └───secret_scanning_alerts
+```
+
 A GitHub App could be configured to subscribe to the [`workflow_run`](https://docs.github.com/en/webhooks/webhook-events-and-payloads#workflow_run) event on this repository, and act as a means to securely fetch this raw data and transfer it into a formal data landing zone.
 
 ## Example usage
